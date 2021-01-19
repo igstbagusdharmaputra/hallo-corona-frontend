@@ -11,7 +11,7 @@ class Home extends Component {
         <Header />
         <div className="container margin-top pb-5 mainhead">
           <div className="text-center mb-5">
-            <h2>Artikel Today</h2>
+            <h2>Artikel Hari Ini</h2>
           </div>
           <Articles />
         </div>
