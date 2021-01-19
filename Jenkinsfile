@@ -46,7 +46,7 @@ pipeline {
      stage('Deploy App') {
         steps{
           sshagent(credentials: ['fe']){
-             sh """ ssh ssh -t -t devops@10.10.2.220 -o StrictHostKeyChecking=no  << EOF 
+             sh """ ssh -t -t devops@10.10.2.220 -o StrictHostKeyChecking=no  << EOF 
                 cd /home/devops/hallo-corona-frontend
                 docker-compose down
                 git pull origin master
