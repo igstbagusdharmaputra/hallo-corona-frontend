@@ -12,7 +12,7 @@ pipeline {
 	      git credentialsId: 'fe', url: 'git@github.com:igstbagusdharmaputra/hallo-corona-frontend.git'
       }
     }
-stage('Build') {
+   stage('Build') {
        steps {
          sh 'npm install'
        }
