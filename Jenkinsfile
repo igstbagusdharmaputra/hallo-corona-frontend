@@ -1,6 +1,6 @@
 pipeline {
   environment {
-     dockerRegistry = "dharmatkj/nodejs-app"
+     dockerRegistry = "dharmatkj/hallo-corona-fe"
      dockerRegistryCredential = 'dockerhub'
      dockerImage = ''
   }
@@ -9,17 +9,17 @@ pipeline {
   stages {
     stage('Cloning Git') {
       steps {
-	      git credentialsId: 'github', url: 'https://github.com/igstbagusdharmaputra/Docker-NodeJS-Part-3'
+	      git credentialsId: 'fe', url: 'git@github.com:igstbagusdharmaputra/hallo-corona-frontend.git'
       }
     }
-    stage('Build') {
+stage('Build') {
        steps {
          sh 'npm install'
        }
     }
     stage('Test') {
       steps {
-        sh 'npm test'
+        echo 'test'
       }
     }
     stage('Building image') {
@@ -41,23 +41,19 @@ pipeline {
      stage('Remove Unused docker image') {
        steps{
          sh "docker rmi $dockerRegistry:latest"
-         sh 'docker rmi -f $(docker images -f "dangling=true" -q)'
        }
      }
      stage('Deploy App') {
         steps{
-          sshagent(credentials: ['frontend']){
-            //  sh 'git config user.email "dharmatkjone@gmail.com"'
-            //  sh 'git config user.name "igstbagusdharmaputra"'
-             sh """ ssh -t -t devops@192.168.1.9 -o StrictHostKeyChecking=no << EOF 
-                cd /home/devops/app-3/
+          sshagent(credentials: ['fe']){
+             sh """ ssh -t -t devops@10.10.2.200 -o StrictHostKeyChecking=no << EOF 
+                cd /home/devops/hallo-corona-frontend
                 docker-compose down
                 git pull origin master
-                docker rmi dharmatkj/nodejs-app:latest
+                docker rmi dharmatkj/hallo-corona-fe:latest
                 docker-compose up -d
                 exit
                 EOF"""
-            //  sh 'ssh -t -t devops@192.168.1.10 -o StrictHostKeyChecking=no "cd /home/devops/app-3 && git pull origin master && docker-compose down && docker rmi dharmatkj/nodejs-app:latest && docker-compose up -d"'
           }
         }
      }

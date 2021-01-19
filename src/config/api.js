@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const API = axios.create({
-  baseURL: "http://192.168.1.87:5000/api/v1",
+  baseURL: "https://api.dharmafinal.instructype.com/api/v1",
 });
 
 export const setAuthToken = (token) => {
