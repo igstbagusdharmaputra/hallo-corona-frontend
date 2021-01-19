@@ -3,5 +3,6 @@ services:
   frontend:
     container_name: hallo-corona-fe
     image: dharmatkj/hallo-corona-fe:latest
+    stdin_open: true
     ports:
-      - 3000:80
+      - 8000:8000
